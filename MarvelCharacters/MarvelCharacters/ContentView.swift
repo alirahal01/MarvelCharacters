@@ -21,36 +21,8 @@ struct ContentView: View {
             ProgressView()
                 .imageScale(.large)
         case .success(let loadingViewModel):
-            List {
-                ForEach(loadingViewModel.charactersData.indices, id: \.self) { index in
-                    let article = loadingViewModel.charactersData[index]
-                    HStack {
-                        if let imageURL = article.imageURL {
-                            AsyncImage(url: imageURL) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 80, height: 80)
-                            } placeholder: {
-                                ProgressView()
-                            }
-                        } else {
-                            Image(systemName: "􀏅")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 80, height: 80)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text(article.title ?? "")
-                                .font(.subheadline)
-                        }
-                        .padding(5)
-                    }
-                    .listRowSeparator(.hidden)
-
-                }
-                
+            NavigationView {
+                CharacterListView(loadingViewModel: loadingViewModel)
             }
         case .failed(let errorViewModel):
             Color.clear.alert(isPresented: $viewModel.showErrorAlert) {

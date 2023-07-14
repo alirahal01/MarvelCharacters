@@ -56,7 +56,7 @@ class CharactersListViewModel: ObservableObject {
     }
 
 extension CharactersListViewModel {
-    struct CharacterData: Identifiable {
+    struct CharacterData: Identifiable, Equatable {
         let id: Int?
         let title: String?
         let caption: String?

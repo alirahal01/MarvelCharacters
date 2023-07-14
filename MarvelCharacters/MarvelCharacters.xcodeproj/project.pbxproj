@@ -28,6 +28,9 @@
 		9F93A9B32A61A93E00650B75 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9B22A61A93E00650B75 /* String+Extensions.swift */; };
 		9F93A9B62A61A9F300650B75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9B52A61A9F300650B75 /* Constants.swift */; };
 		9F93A9B92A61AFA500650B75 /* DefaultNetworkFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9B82A61AFA500650B75 /* DefaultNetworkFactory.swift */; };
+		9F93A9BC2A61B62F00650B75 /* CharacterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9BB2A61B62F00650B75 /* CharacterRow.swift */; };
+		9F93A9BE2A61CEDF00650B75 /* CharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9BD2A61CEDF00650B75 /* CharacterListView.swift */; };
+		9F93A9C02A61EF2300650B75 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A9BF2A61EF2300650B75 /* CharacterDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 		9F93A9B22A61A93E00650B75 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9F93A9B52A61A9F300650B75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9F93A9B82A61AFA500650B75 /* DefaultNetworkFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkFactory.swift; sourceTree = "<group>"; };
+		9F93A9BB2A61B62F00650B75 /* CharacterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRow.swift; sourceTree = "<group>"; };
+		9F93A9BD2A61CEDF00650B75 /* CharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListView.swift; sourceTree = "<group>"; };
+		9F93A9BF2A61EF2300650B75 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,7 @@
 		9F93A9612A600F8D00650B75 /* MarvelCharacters */ = {
 			isa = PBXGroup;
 			children = (
+				9F93A9BA2A61B60800650B75 /* Views */,
 				9F93A9B42A61A9EA00650B75 /* Constants */,
 				9F93A9B02A61A91600650B75 /* Extensions */,
 				9F93A9AF2A617B0300650B75 /* Info.plist */,
@@ -217,6 +224,16 @@
 				9F93A9B82A61AFA500650B75 /* DefaultNetworkFactory.swift */,
 			);
 			path = "Network Factory";
+			sourceTree = "<group>";
+		};
+		9F93A9BA2A61B60800650B75 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9F93A9BB2A61B62F00650B75 /* CharacterRow.swift */,
+				9F93A9BD2A61CEDF00650B75 /* CharacterListView.swift */,
+				9F93A9BF2A61EF2300650B75 /* CharacterDetailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,6 +369,7 @@
 				9F93A99D2A60108700650B75 /* DataLoadError.swift in Sources */,
 				9F93A9A72A6015B500650B75 /* CharactersListViewModel.swift in Sources */,
 				9F93A96F2A600F8E00650B75 /* MarvelCharacters.xcdatamodeld in Sources */,
+				9F93A9C02A61EF2300650B75 /* CharacterDetailView.swift in Sources */,
 				9F93A9AA2A60168200650B75 /* Character.swift in Sources */,
 				9F93A99E2A60108700650B75 /* RequestParser.swift in Sources */,
 				9F93A9B62A61A9F300650B75 /* Constants.swift in Sources */,
@@ -361,6 +379,8 @@
 				9F93A9B32A61A93E00650B75 /* String+Extensions.swift in Sources */,
 				9F93A9652A600F8D00650B75 /* ContentView.swift in Sources */,
 				9F93A99C2A60108700650B75 /* RequestExecutor.swift in Sources */,
+				9F93A9BE2A61CEDF00650B75 /* CharacterListView.swift in Sources */,
+				9F93A9BC2A61B62F00650B75 /* CharacterRow.swift in Sources */,
 				9F93A9632A600F8D00650B75 /* MarvelCharactersApp.swift in Sources */,
 				9F93A9B92A61AFA500650B75 /* DefaultNetworkFactory.swift in Sources */,
 				9F93A99F2A60108700650B75 /* NetworkClient.swift in Sources */,
