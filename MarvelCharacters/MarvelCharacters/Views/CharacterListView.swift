@@ -34,11 +34,11 @@ struct CharacterListView: View {
                     )
                 }
             }
-            .navigationTitle("Characters")
         }
         .onAppear {
             selectedCharacter = nil
         }
+        .navigationTitle("Characters")
     }
 }
 

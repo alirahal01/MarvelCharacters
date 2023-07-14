@@ -129,10 +129,10 @@
 		9F93A9612A600F8D00650B75 /* MarvelCharacters */ = {
 			isa = PBXGroup;
 			children = (
+				9F93A9AF2A617B0300650B75 /* Info.plist */,
 				9F93A9BA2A61B60800650B75 /* Views */,
 				9F93A9B42A61A9EA00650B75 /* Constants */,
 				9F93A9B02A61A91600650B75 /* Extensions */,
-				9F93A9AF2A617B0300650B75 /* Info.plist */,
 				9F93A9A82A60167900650B75 /* Model */,
 				9F93A9A52A6015A400650B75 /* ViewModel */,
 				9F93A9952A60105F00650B75 /* NetworkService */,

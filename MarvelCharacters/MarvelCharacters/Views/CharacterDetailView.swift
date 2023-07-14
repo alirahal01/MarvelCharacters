@@ -38,7 +38,6 @@ struct CharacterDetailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle(character.title ?? "")
     }
 }
 
