@@ -15,6 +15,10 @@ protocol NetworkClient {
     func fetchData<T: Decodable>() -> AnyPublisher<Result<T, ErrorViewModel>, ErrorViewModel>
 }
 
+protocol NetworkServiceFactory {
+    static func makeNetworkService() -> DefaultNetworkClient
+}
+
 struct DefaultNetworkClient: NetworkClient {
     let requestBuilder: URLRequestConvertible
     let requestExecutor: NetworkRequestExecutable

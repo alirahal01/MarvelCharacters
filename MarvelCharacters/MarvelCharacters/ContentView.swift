@@ -6,83 +6,62 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    
+    @ObservedObject var viewModel: CharactersListViewModel
+    
     var body: some View {
-        NavigationView {
+        let state = viewModel.state
+        
+        switch state {
+        case . idle:
+            Color.clear.onAppear(perform: { viewModel.LoadData() })
+        case .loading:
+            ProgressView()
+                .imageScale(.large)
+        case .success(let loadingViewModel):
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                ForEach(loadingViewModel.charactersData.indices, id: \.self) { index in
+                    let article = loadingViewModel.charactersData[index]
+                    HStack {
+                        if let imageURL = article.imageURL {
+                            AsyncImage(url: imageURL) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 80, height: 80)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                        } else {
+                            Image(systemName: "􀏅")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 80, height: 80)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(article.title ?? "")
+                                .font(.subheadline)
+                        }
+                        .padding(5)
                     }
+                    .listRowSeparator(.hidden)
+
                 }
-                .onDelete(perform: deleteItems)
+                
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        case .failed(let errorViewModel):
+            Color.clear.alert(isPresented: $viewModel.showErrorAlert) {
+                Alert(title: Text("Error"), message: Text(errorViewModel.message), dismissButton: .default(Text("OK")))
             }
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView(viewModel: CharactersListViewModel()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//    }
+//}

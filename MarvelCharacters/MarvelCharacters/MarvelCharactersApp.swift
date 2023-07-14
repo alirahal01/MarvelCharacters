@@ -13,7 +13,7 @@ struct MarvelCharactersApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: CharactersListViewModel())
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
