@@ -11,21 +11,22 @@ struct ContentView: View {
     
     @ObservedObject var viewModel: CharactersListViewModel
     @StateObject var networkMonitor = NetworkMonitor()
-    @State private var isTryingToConnect = false
-
+    
     var body: some View {
         VStack {
             if networkMonitor.isConnected {
                 let state = viewModel.state
                 switch state {
                 case . idle:
-                    Color.clear.onAppear(perform: { viewModel.LoadData() })
+                    Color.clear.onAppear(perform: { viewModel.loadData() })
                 case .loading:
                     ProgressView()
                         .imageScale(.large)
                 case .success(let loadingViewModel):
                     NavigationView {
-                        CharacterListView(loadingViewModel: loadingViewModel)
+                        CharacterListView(loadingViewModel: loadingViewModel, loadMoreDataAction: {
+                            viewModel.loadData(loadMore: true)
+                        })
                     }
                 case .failed(let errorViewModel):
                     Color.clear.alert(isPresented: $viewModel.showErrorAlert) {

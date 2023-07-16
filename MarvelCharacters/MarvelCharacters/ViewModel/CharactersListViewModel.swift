@@ -15,17 +15,25 @@ class CharactersListViewModel: ObservableObject {
     @Published var charactersData: [CharacterData] = []
     @Published private(set) var state: LoadingState<LoadedViewModel> = .idle
     @Published var showErrorAlert = false
+    private var offset: Int = 0
     
     init(networkService: NetworkClient? = nil) {
         self.networkService = networkService
     }
     
-    func LoadData() {
+    func incrementOffset() {
+        self.offset += 100
+    }
+    
+    func loadData(loadMore: Bool? = false) {
         guard state != .loading else {
             return
         }
         state = .loading
-        let networkService = DefaultNetworkServiceFactory.makeNetworkService()
+        if let loadMore = loadMore, loadMore == true {
+            self.incrementOffset()
+        }
+        let networkService = DefaultNetworkServiceFactory.makeNetworkService(offset: offset)
         cancellable = networkService.fetchData().sink { [weak self] completion in
             if case .failure(let error) = completion {
                 DispatchQueue.main.async {

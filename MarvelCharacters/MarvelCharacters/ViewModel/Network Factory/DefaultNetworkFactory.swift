@@ -7,14 +7,18 @@
 
 import Foundation
 
+protocol NetworkServiceFactory {
+    static func makeNetworkService(offset: Int) -> DefaultNetworkClient
+}
+
 class DefaultNetworkServiceFactory: NetworkServiceFactory {
-    static func makeNetworkService() -> DefaultNetworkClient {
+    static func makeNetworkService(offset: Int) -> DefaultNetworkClient {
         let timeStamp = Int(Date().timeIntervalSince1970)
         let hash = "\(timeStamp)\(MarvelServiceConstants.privateApiKey)\(MarvelServiceConstants.publicApiKey)".md5()
 
         let queryItems = [
-            URLQueryItem(name: "limit", value: String(MarvelServiceConstants.limit)),
-            URLQueryItem(name: "offset", value: "15"),
+            URLQueryItem(name: "limit", value: "100"),
+            URLQueryItem(name: "offset", value: "\(offset)"),
             URLQueryItem(name: "apikey", value: MarvelServiceConstants.publicApiKey),
             URLQueryItem(name: "ts", value: String(timeStamp)),
             URLQueryItem(name: "hash", value: hash),

@@ -10,28 +10,33 @@ import SwiftUI
 struct CharacterListView: View {
     let loadingViewModel: CharactersListViewModel.LoadedViewModel
     @State private var selectedCharacter: CharactersListViewModel.CharacterData? = nil // State variable to track the selected character
-    
+    let loadMoreDataAction: () -> Void // Closure property to trigger action when last element is reached
     var body: some View {
         NavigationView {
             List {
-                ForEach(loadingViewModel.charactersData) { character in
+                ForEach(loadingViewModel.charactersData.indices, id: \.self) { index in
                     Button(action: {
-                        selectedCharacter = character // Set the selected character
+                        selectedCharacter = loadingViewModel.charactersData[index] // Set the selected character
                     }) {
-                        CharacterRow(character: character)
+                        CharacterRow(character: loadingViewModel.charactersData[index])
                     }
                     .background(
                         NavigationLink(
-                            destination: CharacterDetailView(character: character),
+                            destination: CharacterDetailView(character: loadingViewModel.charactersData[index]),
                             isActive: Binding<Bool>(
-                                get: { selectedCharacter ==  character},
+                                get: { selectedCharacter ==  loadingViewModel.charactersData[index]},
                                 set: { _ in }
                             )
                         ) {
                             EmptyView()
                         }
-                        .opacity(0) // Hide the navigation link
+                            .opacity(0) // Hide the navigation link
                     )
+                    .onAppear {
+                        if index == loadingViewModel.charactersData.count - 1 {
+                            loadMoreDataAction()
+                        }
+                    }
                 }
             }
         }
