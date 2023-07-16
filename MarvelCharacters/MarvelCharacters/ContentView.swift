@@ -10,27 +10,43 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: CharactersListViewModel
-    
+    @StateObject var networkMonitor = NetworkMonitor()
+    @State private var isTryingToConnect = false
+
     var body: some View {
-        let state = viewModel.state
-        
-        switch state {
-        case . idle:
-            Color.clear.onAppear(perform: { viewModel.LoadData() })
-        case .loading:
-            ProgressView()
-                .imageScale(.large)
-        case .success(let loadingViewModel):
-            NavigationView {
-                CharacterListView(loadingViewModel: loadingViewModel)
+        VStack {
+            if networkMonitor.isConnected {
+                let state = viewModel.state
+                switch state {
+                case . idle:
+                    Color.clear.onAppear(perform: { viewModel.LoadData() })
+                case .loading:
+                    ProgressView()
+                        .imageScale(.large)
+                case .success(let loadingViewModel):
+                    NavigationView {
+                        CharacterListView(loadingViewModel: loadingViewModel)
+                    }
+                case .failed(let errorViewModel):
+                    Color.clear.alert(isPresented: $viewModel.showErrorAlert) {
+                        Alert(title: Text("Error"), message: Text(errorViewModel.message), dismissButton: .default(Text("OK")))
+                    }
+                }
+            } else {
+                VStack {
+                    Text("No Internet Connection")
+                }
             }
-        case .failed(let errorViewModel):
-            Color.clear.alert(isPresented: $viewModel.showErrorAlert) {
-                Alert(title: Text("Error"), message: Text(errorViewModel.message), dismissButton: .default(Text("OK")))
-            }
+        }
+        .onAppear {
+            networkMonitor.start()
+        }
+        .onDisappear {
+            networkMonitor.stop()
         }
     }
 }
+
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
