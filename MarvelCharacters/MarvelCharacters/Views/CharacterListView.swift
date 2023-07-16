@@ -38,7 +38,7 @@ struct CharacterListView: View {
         .onAppear {
             selectedCharacter = nil
         }
-        .navigationTitle("Characters")
+        .navigationTitle("Marvel Characters")
     }
 }
 
