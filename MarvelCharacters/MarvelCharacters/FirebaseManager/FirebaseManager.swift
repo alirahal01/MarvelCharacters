@@ -14,18 +14,18 @@ import FirebaseRemoteConfig
 class FirebaseManager {
     static let shared = FirebaseManager()
 
-    private init() {
+    init() {
         FirebaseApp.configure()
         configureFirebaseCrashlytics()
         configureFirebaseRemoteConfig()
     }
 
-    private func configureFirebaseCrashlytics() {
+    func configureFirebaseCrashlytics() {
         Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         // Additional Crashlytics configuration if needed
     }
 
-    private func configureFirebaseRemoteConfig() {
+    func configureFirebaseRemoteConfig() {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 3600
 

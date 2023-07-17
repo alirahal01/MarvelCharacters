@@ -40,6 +40,9 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            FirebaseManager.shared.configureFirebaseCrashlytics()
+            FirebaseManager.shared.configureFirebaseRemoteConfig()
+            fatalError("This is a forced crash for testing purposes.")
             networkMonitor.start()
         }
         .onDisappear {
