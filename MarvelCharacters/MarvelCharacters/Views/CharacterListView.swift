@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct CharacterListView: View {
     let loadingViewModel: CharactersListViewModel.LoadedViewModel
@@ -33,6 +34,10 @@ struct CharacterListView: View {
                             .opacity(0) // Hide the navigation link
                     )
                     .onAppear {
+                        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+                            AnalyticsParameterScreenName: "List",
+                            AnalyticsParameterScreenClass: "CharactersListView"
+                        ])
                         if index == loadingViewModel.charactersData.count - 1 {
                             loadMoreDataAction()
                         }
